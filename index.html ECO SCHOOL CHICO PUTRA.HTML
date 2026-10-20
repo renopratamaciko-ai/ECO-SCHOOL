@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EcoSchool - Belajar Peduli Lingkungan</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f1f8f4;
+            color: #173b2b;
+        }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, #087f5b, #20a66a);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 32px;
+        }
+
+        header p {
+            margin-top: 8px;
+        }
+
+        /* NAVBAR */
+        nav {
+            background: white;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        nav button {
+            border: none;
+            background: #e8f5ee;
+            color: #087f5b;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        nav button:hover {
+            background: #087f5b;
+            color: white;
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px 18px;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, #d9f7e7, #ffffff);
+            padding: 35px 25px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .hero h2 {
+            font-size: 30px;
+            color: #087f5b;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            line-height: 1.6;
+        }
+
+        /* CARD */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 18px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .card h3 {
+            color: #087f5b;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            line-height: 1.6;
+        }
+
+        .icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        /* FORM */
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            margin-top: 8px;
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .btn {
+            border: none;
+            background: #087f5b;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 3px;
+        }
+
+        .btn:hover {
+            background: #065c43;
+        }
+
+        /* MATERI */
+        .material {
+            margin-bottom: 15px;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            border-left: 6px solid #20a66a;
+        }
+
+        .material h3 {
+            margin-bottom: 8px;
+            color: #087f5b;
+        }
+
+        /* QUIZ */
+        .question {
+            background: white;
+            padding: 20px;
+            margin-bottom: 18px;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+        }
+
+        .question h3 {
+            margin-bottom: 12px;
+        }
+
+        .option {
+            display: block;
+            background: #f1f8f4;
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .option:hover {
+            background: #d9f7e7;
+        }
+
+        #hasilKuis {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 15px;
+            background: #d9f7e7;
+            display: none;
+            text-align: center;
+        }
+
+        /* SAMPAH */
+        .trash-result {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e8f5ee;
+            border-radius: 15px;
+            display: none;
+        }
+
+        /* =========================
+           ECO CHALLENGE
+        ========================= */
+
+        .timer-card {
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .timer-card h3 {
+            color: #087f5b;
+            margin-bottom: 15px;
+        }
+
+        .timer-display {
+            font-size: 48px;
+            font-weight: bold;
+            color: #087f5b;
+            margin: 15px 0;
+        }
+
+        .timer-setting {
+            max-width: 300px;
+            margin: auto;
+            text-align: left;
+        }
+
+        .challenge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: white;
+            padding: 17px;
+            margin-bottom: 10px;
+            border-radius: 12px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+            transition: 0.2s;
+        }
+
+        .challenge:hover {
+            transform: translateY(-2px);
+        }
+
+        .challenge input {
+            width: 20px;
+            height: 20px;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .challenge span {
+            font-size: 16px;
+        }
+
+        .progress-card {
+            background: #d9f7e7;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .progress-card h3 {
+            color: #087f5b;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 15px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: #20a66a;
+            transition: 0.3s;
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: 30px;
+            background: #173b2b;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+
+            header h1 {
+                font-size: 25px;
+            }
+
+            .hero h2 {
+                font-size: 24px;
+            }
+
+            nav {
+                justify-content: flex-start;
+                overflow-x: auto;
+            }
+
+            nav button {
+                white-space: nowrap;
+            }
+
+            .timer-display {
+                font-size: 40px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<header>
+    <h1>🌱 EcoSchool</h1>
+    <p>Belajar Hari Ini, Selamatkan Bumi Esok Hari</p>
+</header>
+
+
+<nav>
+    <button onclick="showPage('home')">🏠 Beranda</button>
+    <button onclick="showPage('materi')">📚 Materi</button>
+    <button onclick="showPage('sampah')">♻️ Sampah</button>
+    <button onclick="showPage('kuis')">📝 Kuis</button>
+    <button onclick="showPage('challenge')">🌍 Challenge</button>
+    <button onclick="showPage('profil')">👤 Profil</button>
+</nav>
+
+
+<div class="container">
+
+
+    <!-- ================= BERANDA ================= -->
+
+    <section id="home" class="page active">
+
+        <div class="hero">
+            <h2>Selamat Datang di EcoSchool! 🌱</h2>
+
+            <p>
+                EcoSchool adalah aplikasi edukasi yang membantu siswa
+                memahami pentingnya menjaga lingkungan melalui materi,
+                kuis, dan tantangan ramah lingkungan.
+            </p>
+        </div>
+
+
+        <div class="cards">
+
+            <div class="card">
+                <div class="icon">📚</div>
+                <h3>Belajar</h3>
+
+                <p>
+                    Pelajari berbagai informasi tentang lingkungan,
+                    sampah, energi, dan penghijauan.
+                </p>
+            </div>
+
+
+            <div class="card">
+                <div class="icon">♻️</div>
+                <h3>Kelola Sampah</h3>
+
+                <p>
+                    Kenali jenis sampah dan pelajari cara
+                    mengelolanya dengan benar.
+                </p>
+            </div>
+
+
+            <div class="card">
+                <div class="icon">📝</div>
+                <h3>Uji Pengetahuan</h3>
+
+                <p>
+                    Kerjakan kuis lingkungan dan lihat
+                    hasil nilai kamu.
+                </p>
+            </div>
+
+
+            <div class="card">
+                <div class="icon">🌍</div>
+                <h3>Eco Challenge</h3>
+
+                <p>
+                    Lakukan kebiasaan sederhana yang
+                    membantu menjaga bumi.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= MATERI ================= -->
+
+    <section id="materi" class="page">
+
+        <div class="hero">
+
+            <h2>📚 Materi Lingkungan</h2>
+
+            <p>
+                Pelajari dasar-dasar menjaga lingkungan.
+            </p>
+
+        </div>
+
+
+        <div class="material">
+
+            <h3>🌳 1. Penghijauan</h3>
+
+            <p>
+                Penghijauan adalah kegiatan menanam dan merawat
+                tumbuhan untuk menjaga keseimbangan lingkungan.
+                Pohon membantu menghasilkan oksigen dan menyerap
+                karbon dioksida.
+            </p>
+
+        </div>
+
+
+        <div class="material">
+
+            <h3>♻️ 2. Pengelolaan Sampah</h3>
+
+            <p>
+                Sampah sebaiknya dipilah berdasarkan jenisnya.
+                Sampah dapat dikurangi dengan menerapkan prinsip
+                3R yaitu Reduce, Reuse, dan Recycle.
+            </p>
+
+        </div>
+
+
+        <div class="material">
+
+            <h3>💧 3. Menghemat Air</h3>
+
+            <p>
+                Gunakan air secukupnya dan pastikan keran tertutup
+                setelah digunakan.
+            </p>
+
+        </div>
+
+
+        <div class="material">
+
+            <h3>💡 4. Menghemat Energi</h3>
+
+            <p>
+                Matikan lampu, komputer, dan peralatan elektronik
+                ketika tidak digunakan untuk mengurangi pemborosan
+                energi.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= SAMPAH ================= -->
+
+    <section id="sampah" class="page">
+
+        <div class="hero">
+
+            <h2>♻️ Klasifikasi Sampah</h2>
+
+            <p>
+                Pilih jenis benda untuk mengetahui kategori sampahnya.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <label>Pilih benda:</label>
+
+            <select id="jenisSampah">
+
+                <option value="">-- Pilih --</option>
+
+                <option value="organik">
+                    Sisa makanan
+                </option>
+
+                <option value="organik">
+                    Daun kering
+                </option>
+
+                <option value="anorganik">
+                    Botol plastik
+                </option>
+
+                <option value="anorganik">
+                    Kaleng minuman
+                </option>
+
+                <option value="b3">
+                    Baterai bekas
+                </option>
+
+                <option value="b3">
+                    Lampu bekas
+                </option>
+
+            </select>
+
+
+            <button class="btn" onclick="cekSampah()">
+                Cek Jenis Sampah
+            </button>
+
+
+            <div id="hasilSampah" class="trash-result"></div>
+
+        </div>
+
+
+        <div class="cards">
+
+            <div class="card">
+
+                <div class="icon">🍂</div>
+
+                <h3>Organik</h3>
+
+                <p>
+                    Sampah yang berasal dari makhluk hidup dan
+                    mudah terurai, seperti daun dan sisa makanan.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="icon">🥤</div>
+
+                <h3>Anorganik</h3>
+
+                <p>
+                    Sampah yang sulit terurai, seperti plastik,
+                    kaca, dan kaleng.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="icon">🔋</div>
+
+                <h3>B3</h3>
+
+                <p>
+                    Sampah yang mengandung bahan berbahaya,
+                    seperti baterai dan beberapa jenis lampu.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= KUIS ================= -->
+
+    <section id="kuis" class="page">
+
+        <div class="hero">
+
+            <h2>📝 Kuis Lingkungan</h2>
+
+            <p>
+                Uji pengetahuanmu tentang lingkungan!
+            </p>
+
+        </div>
+
+
+        <div class="question">
+
+            <h3>1. Apa yang dimaksud dengan 3R?</h3>
+
+            <label class="option">
+                <input type="radio" name="q1" value="benar">
+                Reduce, Reuse, Recycle
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q1" value="salah">
+                Read, Run, Rest
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q1" value="salah">
+                Repair, Run, Read
+            </label>
+
+        </div>
+
+
+        <div class="question">
+
+            <h3>2. Contoh sampah organik adalah...</h3>
+
+            <label class="option">
+                <input type="radio" name="q2" value="salah">
+                Botol plastik
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q2" value="benar">
+                Daun kering
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q2" value="salah">
+                Kaleng
+            </label>
+
+        </div>
+
+
+        <div class="question">
+
+            <h3>3. Salah satu cara menghemat energi adalah...</h3>
+
+            <label class="option">
+                <input type="radio" name="q3" value="benar">
+                Mematikan lampu ketika tidak digunakan
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q3" value="salah">
+                Menyalakan semua lampu
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q3" value="salah">
+                Membiarkan TV menyala
+            </label>
+
+        </div>
+
+
+        <div class="question">
+
+            <h3>4. Mengapa kita perlu menanam pohon?</h3>
+
+            <label class="option">
+                <input type="radio" name="q4" value="benar">
+                Membantu menjaga kualitas udara
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q4" value="salah">
+                Membuat sampah semakin banyak
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q4" value="salah">
+                Menghabiskan air
+            </label>
+
+        </div>
+
+
+        <div class="question">
+
+            <h3>5. Contoh sampah anorganik adalah...</h3>
+
+            <label class="option">
+                <input type="radio" name="q5" value="salah">
+                Kulit buah
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q5" value="benar">
+                Botol plastik
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q5" value="salah">
+                Daun
+            </label>
+
+        </div>
+
+
+        <button class="btn" onclick="hitungKuis()">
+            Lihat Nilai
+        </button>
+
+
+        <div id="hasilKuis"></div>
+
+    </section>
+
+
+    <!-- ================= CHALLENGE ================= -->
+
+    <section id="challenge" class="page">
+
+        <div class="hero">
+
+            <h2>🌍 Eco Challenge</h2>
+
+            <p>
+                Selesaikan tantangan ramah lingkungan hari ini!
+            </p>
+
+        </div>
+
+
+        <!-- TIMER -->
+
+        <div class="timer-card">
+
+            <h3>⏱️ Timer Challenge</h3>
+
+            <div class="timer-setting">
+
+                <label>
+                    Atur waktu (menit):
+                </label>
+
+                <input
+                    type="number"
+                    id="waktuTimer"
+                    min="1"
+                    max="120"
+                    value="5"
+                    onchange="ubahWaktu()"
+                >
+
+            </div>
+
+
+            <div id="timerDisplay" class="timer-display">
+                05:00
+            </div>
+
+
+            <button class="btn" onclick="mulaiTimer()">
+                ▶ Mulai
+            </button>
+
+            <button class="btn" onclick="jedaTimer()">
+                ⏸ Jeda
+            </button>
+
+            <button class="btn" onclick="resetTimer()">
+                🔄 Reset
+            </button>
+
+        </div>
+
+
+        <!-- CHALLENGE 1 -->
+
+        <div class="challenge">
+
+            <input
+                type="checkbox"
+                onchange="updateChallenge(this)"
+            >
+
+            <span>
+                💧 Menghemat penggunaan air
+            </span>
+
+        </div>
+
+
+        <!-- CHALLENGE 2 -->
+
+        <div class="challenge">
+
+            <input
+                type="checkbox"
+                onchange="updateChallenge(this)"
+            >
+
+            <span>
+                💡 Mematikan lampu yang tidak digunakan
+            </span>
+
+        </div>
+
+
+        <!-- CHALLENGE 3 -->
+
+        <div class="challenge">
+
+            <input
+                type="checkbox"
+                onchange="updateChallenge(this)"
+            >
+
+            <span>
+                🥤 Membawa botol minum sendiri
+            </span>
+
+        </div>
+
+
+        <!-- CHALLENGE 4 -->
+
+        <div class="challenge">
+
+            <input
+                type="checkbox"
+                onchange="updateChallenge(this)"
+            >
+
+            <span>
+                ♻️ Membuang sampah sesuai jenisnya
+            </span>
+
+        </div>
+
+
+        <!-- CHALLENGE 5 -->
+
+        <div class="challenge">
+
+            <input
+                type="checkbox"
+                onchange="updateChallenge(this)"
+            >
+
+            <span>
+                🌱 Merawat tanaman
+            </span>
+
+        </div>
+
+
+        <!-- PROGRESS -->
+
+        <div class="progress-card">
+
+            <h3>
+                📊 Progress Hari Ini
+            </h3>
+
+            <p id="progressChallenge">
+                0 dari 5 tantangan selesai.
+            </p>
+
+
+            <div class="progress-bar">
+
+                <div
+                    id="progressFill"
+                    class="progress-fill">
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= PROFIL ================= -->
+
+    <section id="profil" class="page">
+
+        <div class="hero">
+
+            <h2>👤 Profil Siswa</h2>
+
+            <p>
+                Masukkan identitas untuk ditampilkan di EcoSchool.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <label>Nama:</label>
+
+            <input
+                type="text"
+                id="nama"
+                placeholder="Masukkan nama"
+            >
+
+
+            <label>Kelas:</label>
+
+            <input
+                type="text"
+                id="kelas"
+                placeholder="Contoh: X-1"
+            >
+
+
+            <button class="btn" onclick="simpanProfil()">
+                Simpan Profil
+            </button>
+
+
+            <div
+                id="profilHasil"
+                style="margin-top:20px;">
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<footer>
+
+    <p>🌱 EcoSchool © 2026</p>
+
+    <p>
+        Belajar untuk menjaga bumi.
+    </p>
+
+</footer>
+
+
+<script>
+
+    /* =========================
+       PINDAH HALAMAN
+    ========================= */
+
+    function showPage(pageId) {
+
+        const pages =
+            document.querySelectorAll(".page");
+
+        pages.forEach(function(page) {
+
+            page.classList.remove("active");
+
+        });
+
+
+        document
+            .getElementById(pageId)
+            .classList.add("active");
+
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    }
+
+
+    /* =========================
+       CEK SAMPAH
+    ========================= */
+
+    function cekSampah() {
+
+        const jenis =
+            document.getElementById("jenisSampah").value;
+
+        const hasil =
+            document.getElementById("hasilSampah");
+
+
+        if (jenis === "") {
+
+            hasil.style.display = "block";
+
+            hasil.innerHTML =
+                "⚠️ Silakan pilih benda terlebih dahulu.";
+
+            return;
+        }
+
+
+        hasil.style.display = "block";
+
+
+        if (jenis === "organik") {
+
+            hasil.innerHTML =
+                "🍂 <b>Sampah Organik</b><br>" +
+                "Sampah ini berasal dari makhluk hidup " +
+                "dan relatif mudah terurai.";
+
+        }
+
+
+        else if (jenis === "anorganik") {
+
+            hasil.innerHTML =
+                "♻️ <b>Sampah Anorganik</b><br>" +
+                "Sampah ini sulit terurai dan sebaiknya " +
+                "digunakan kembali atau didaur ulang.";
+
+        }
+
+
+        else {
+
+            hasil.innerHTML =
+                "⚠️ <b>Sampah B3</b><br>" +
+                "Sampah ini perlu ditangani dengan hati-hati " +
+                "karena dapat mengandung bahan berbahaya.";
+
+        }
+
+    }
+
+
+    /* =========================
+       HITUNG KUIS
+    ========================= */
+
+    function hitungKuis() {
+
+        let skor = 0;
+
+
+        for (let i = 1; i <= 5; i++) {
+
+            const jawaban =
+                document.querySelector(
+                    'input[name="q' + i + '"]:checked'
+                );
+
+
+            if (
+                jawaban &&
+                jawaban.value === "benar"
+            ) {
+
+                skor++;
+
+            }
+
+        }
+
+
+        const nilai = skor * 20;
+
+
+        const hasil =
+            document.getElementById("hasilKuis");
+
+
+        hasil.style.display = "block";
+
+
+        let pesan = "";
+
+
+        if (nilai === 100) {
+
+            pesan =
+                "🏆 Luar biasa! Kamu sangat memahami lingkungan.";
+
+        }
+
+        else if (nilai >= 80) {
+
+            pesan =
+                "🌟 Bagus! Pengetahuan lingkunganmu sudah baik.";
+
+        }
+
+        else if (nilai >= 60) {
+
+            pesan =
+                "👍 Cukup baik! Tetap semangat belajar.";
+
+        }
+
+        else {
+
+            pesan =
+                "📚 Yuk belajar lagi tentang lingkungan!";
+
+        }
+
+
+        hasil.innerHTML =
+            "<h2>Nilai Kamu: " +
+            nilai +
+            "</h2>" +
+            "<p>" +
+            pesan +
+            "</p>";
+
+    }
+
+
+    /* =========================
+       ECO CHALLENGE
+    ========================= */
+
+    function updateChallenge(item) {
+
+        const checkbox =
+            document.querySelectorAll(
+                '.challenge input[type="checkbox"]'
+            );
+
+
+        let selesai = 0;
+
+
+        checkbox.forEach(function(box) {
+
+            if (box.checked) {
+
+                selesai++;
+
+            }
+
+        });
+
+
+        const persen =
+            (selesai / 5) * 100;
+
+
+        document.getElementById(
+            "progressChallenge"
+        ).innerHTML =
+            selesai +
+            " dari 5 tantangan selesai.";
+
+
+        document.getElementById(
+            "progressFill"
+        ).style.width =
+            persen + "%";
+
+
+        /* ALERT SAAT CHECKBOX DICENTANG */
+
+        if (item.checked) {
+
+            alert(
+                "🌱 Challenge selesai!\n\n" +
+                "Hebat! Kamu telah menyelesaikan " +
+                "satu kegiatan ramah lingkungan."
+            );
+
+        }
+
+
+        /* ALERT SAAT SEMUA SELESAI */
+
+        if (selesai === 5) {
+
+            alert(
+                "🎉 SELAMAT!\n\n" +
+                "Semua Eco Challenge hari ini " +
+                "sudah selesai!\n\n" +
+                "Terima kasih sudah ikut menjaga bumi. 🌍🌱"
+            );
+
+        }
+
+    }
+
+
+    /* =========================
+       TIMER
+    ========================= */
+
+    let waktu = 5 * 60;
+
+    let timer = null;
+
+
+    function tampilkanTimer() {
+
+        let menit =
+            Math.floor(waktu / 60);
+
+        let detik =
+            waktu % 60;
+
+
+        menit =
+            String(menit).padStart(2, "0");
+
+        detik =
+            String(detik).padStart(2, "0");
+
+
+        document.getElementById(
+            "timerDisplay"
+        ).innerHTML =
+            menit + ":" + detik;
+
+    }
+
+
+    /* MULAI TIMER */
+
+    function mulaiTimer() {
+
+        if (timer !== null) {
+
+            return;
+
+        }
+
+
+        timer = setInterval(function() {
+
+            if (waktu > 0) {
+
+                waktu--;
+
+                tampilkanTimer();
+
+            }
+
+            else {
+
+                clearInterval(timer);
+
+                timer = null;
+
+
+                alert(
+                    "⏰ WAKTU HABIS!\n\n" +
+                    "Timer Eco Challenge telah selesai. 🌱"
+                );
+
+            }
+
+        }, 1000);
+
+    }
+
+
+    /* JEDA TIMER */
+
+    function jedaTimer() {
+
+        if (timer !== null) {
+
+            clearInterval(timer);
+
+            timer = null;
+
+            alert("⏸️ Timer dijeda.");
+
+        }
+
+    }
+
+
+    /* RESET TIMER */
+
+    function resetTimer() {
+
+        clearInterval(timer);
+
+        timer = null;
+
+
+        const menit =
+            parseInt(
+                document.getElementById(
+                    "waktuTimer"
+                ).value
+            );
+
+
+        if (
+            isNaN(menit) ||
+            menit < 1
+        ) {
+
+            waktu = 5 * 60;
+
+        }
+
+        else {
+
+            waktu = menit * 60;
+
+        }
+
+
+        tampilkanTimer();
+
+    }
+
+
+    /* UBAH WAKTU */
+
+    function ubahWaktu() {
+
+        if (timer !== null) {
+
+            alert(
+                "⚠️ Hentikan timer terlebih dahulu " +
+                "sebelum mengubah waktu."
+            );
+
+            return;
+
+        }
+
+
+        const menit =
+            parseInt(
+                document.getElementById(
+                    "waktuTimer"
+                ).value
+            );
+
+
+        if (
+            !isNaN(menit) &&
+            menit >= 1 &&
+            menit <= 120
+        ) {
+
+            waktu = menit * 60;
+
+            tampilkanTimer();
+
+        }
+
+        else {
+
+            alert(
+                "⚠️ Masukkan waktu antara 1 sampai 120 menit."
+            );
+
+        }
+
+    }
+
+
+    /* =========================
+       SIMPAN PROFIL
+    ========================= */
+
+    function simpanProfil() {
+
+        const nama =
+            document.getElementById("nama").value;
+
+        const kelas =
+            document.getElementById("kelas").value;
+
+        const hasil =
+            document.getElementById("profilHasil");
+
+
+        if (
+            nama === "" ||
+            kelas === ""
+        ) {
+
+            hasil.innerHTML =
+                "⚠️ Nama dan kelas harus diisi.";
+
+            return;
+
+        }
+
+
+        hasil.innerHTML =
+
+            "<div style='" +
+            "background:#d9f7e7;" +
+            "padding:15px;" +
+            "border-radius:12px;'>" +
+
+            "👋 Halo, <b>" +
+            nama +
+            "</b>!<br>" +
+
+            "Kelas: <b>" +
+            kelas +
+            "</b><br><br>" +
+
+            "Selamat belajar bersama EcoSchool! 🌱" +
+
+            "</div>";
+
+    }
+
+
+    /* TAMPILKAN TIMER PERTAMA KALI */
+
+    tampilkanTimer();
+
+</script>
+
+</body>
+</html>
